@@ -42,3 +42,17 @@
 20250611	15:52:06	17017a34-8913-4c5a-a1a7-df321e28af3a	POST	/users	http://localhost:5173
 20250611	15:52:41	981cab37-5cee-44d3-9e51-81d884bb5dbc	OPTIONS	/users	http://localhost:5173
 20250611	15:52:41	fa24914e-01e7-4e27-ad07-92483f29b54b	POST	/users	http://localhost:5173
+20250611	18:35:59	3c4a2fd2-fc30-485c-8a9e-4b0aa4a49433	OPTIONS	/users	http://localhost:5173
+20250611	18:35:59	b46c416a-2559-45ff-ac67-ea93de519ac1	POST	/users	http://localhost:5173
+20250611	21:04:49	5fbb9661-bad8-4ab9-9352-13c56ceb1bc9	POST	/auth	undefined
+20250611	21:05:39	ab33f40b-9915-4a2b-ac33-e4494e965263	GET	/user	undefined
+20250611	21:06:11	2c1ab53c-10de-4e15-bdd5-d791437a8b5e	GET	/user	undefined
+20250611	21:09:22	14fee8f4-7916-4629-9c22-098fd4cda0ed	GET	/user	undefined
+20250611	21:09:45	6b67a6ad-a0d3-416e-a4e7-3a867de598d0	GET	/user	undefined
+20250611	21:09:57	5d2626be-0eba-49c5-8ebc-dba467ae282f	GET	/user	undefined
+20250611	21:10:32	597cdd26-a087-4507-b4be-066ffbae114c	GET	/user	undefined
+20250611	21:10:41	7c0ac8f8-2435-414d-b22f-32d72a0be4bc	POST	/auth	undefined
+20250611	21:13:22	25667016-04d4-4ca7-bf61-f01e5d28f167	POST	/auth	undefined
+20250611	21:14:28	daf5aff2-036c-4783-a063-5b25ed97efe4	POST	/auth	undefined
+20250611	21:22:18	2a65e587-e8b6-4900-ac5e-a7b8a3990313	POST	/auth	undefined
+20250611	21:26:30	4dd07c17-67de-4998-a578-b6dc168bdfd0	GET	/refresh	undefined
