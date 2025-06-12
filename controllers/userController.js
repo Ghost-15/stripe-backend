@@ -21,10 +21,10 @@ const getAllUsers = asyncHandler(async (req, res) => {
 // @route POST /users
 // @access Private
 const createNewUser = asyncHandler(async (req, res) => {
-    const { first_name, last_name, username, password } = req.body
+    const { first_name, last_name, username, password, roles } = req.body
 
     // Confirm data
-    if ( !first_name || !last_name || !username || !password) {
+    if ( !first_name || !last_name || !username || !password || !Array.isArray(roles) || !roles.length ) {
         return res.status(400).json({message: 'All fields are required'})
     }
 
@@ -38,7 +38,7 @@ const createNewUser = asyncHandler(async (req, res) => {
     // Hash password
     const hashedPwd = await bcrypt.hash(password, 10) // salt rounds
 
-    const userObject = { first_name, last_name, username, "password": hashedPwd }
+    const userObject = { first_name, last_name, username, "password": hashedPwd, roles }
 
     // Create and store new user
     const user = await User.create(userObject)
@@ -54,10 +54,10 @@ const createNewUser = asyncHandler(async (req, res) => {
 // @route PATCH /users
 // @access Private
 const updateUser = asyncHandler(async (req, res) => {
-    const { id, first_name, last_name, username, password, active} = req.body
+    const { id, first_name, last_name, username, password, roles, active} = req.body
 
     // Confirm data
-    if (!id || !first_name || !last_name || !username || password || typeof active !== 'boolean') {
+    if (!id || !first_name || !last_name || !username || password || !Array.isArray(roles) || !roles.length || typeof active !== 'boolean') {
         return res.status(400).json({ message: 'All fields except password are required' })
     }
 
@@ -76,8 +76,10 @@ const updateUser = asyncHandler(async (req, res) => {
         return res.status(409).json({ message: 'Duplicate username' })
     }
 
+    user.first_name = first_name
+    user.last_name = last_name
     user.username = username
-    // user.roles = roles
+    user.roles = roles
     user.active = active
 
     if (password) {
