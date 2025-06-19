@@ -4,9 +4,6 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const asyncHandler = require('express-async-handler')
 
-// @desc Login
-// @route POST /auth
-// @access Public
 const login = asyncHandler(async (req, res) => {
     const { username, password } = req.body
 
@@ -14,9 +11,9 @@ const login = asyncHandler(async (req, res) => {
         return res.status(400).json({ message: 'All fields are required' })
     }
 
-    const foundUser = await User.findOne({ username }).exec()
+    const foundUser = await User.findOne({ where: { username: username } })
 
-    if (!foundUser || !foundUser.active) {
+    if (!foundUser) {
         return res.status(401).json({ message: 'Unauthorized' })
     }
 

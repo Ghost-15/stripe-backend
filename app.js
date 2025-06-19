@@ -7,11 +7,11 @@ const { logger, logEvents } = require('./middleware/logger')
 const errorHandler = require('./middleware/errorHandler')
 const cors = require("cors");
 const corsOptions = require('./config/corsOptions')
-const connectDB = require('./config/dbConn')
+const connectM = require('./config/dbMongoose')
 const mongoose = require('mongoose')
 
 const app = express();
-connectDB()
+connectM()
 
 app.use(logger);
 app.use(express.json());
