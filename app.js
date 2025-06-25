@@ -23,14 +23,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/auth', require('./routes/authRoute'));
 app.use('/refresh', require('./routes/refreshRoute'));
 app.use('/user', require('./routes/userRoute'))
+app.use('/marchand', require('./routes/marchandRoute'))
 app.use('/logout', require('./routes/logoutRoute'));
 
-// catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-// error handler
 app.use(errorHandler)
 
 mongoose.connection.once('open', () => {

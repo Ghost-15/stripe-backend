@@ -37,6 +37,10 @@ User.init(
         allowNull: false,
         required: true,
         },
+        active:{
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+        }
     },
     {
         sequelize: connection,

@@ -1,58 +1,55 @@
-const User = require('../models/User')
+const Marchand = require('../models/Marchand')
+const User = require("../models/User");
 const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcrypt')
-const {transporter} = require("../config/mailer");
 
 
-const getAllUsers = asyncHandler(async (req, res) => {
+const getAllMarchands = asyncHandler(async (req, res) => {
 
-    const users = await User.findAll()
+    const marchands = await Marchand.findAll()
 
-    if (!users?.length) {
+    if (!marchands?.length) {
         return res.status(400).json({ message: 'No users found' })
     }
 
-    res.json(users)
+    res.json(marchands)
 })
 
 
-const createNewUser = asyncHandler(async (req, res) => {
+const createNewMarchand = asyncHandler(async (req, res) => {
 
-    const { first_name, last_name, username, password } = req.body
+    const { first_name, last_name, username, password,
+        nomDeSociete, adresse, numeroSiren, code } = req.body
 
-    if ( !first_name || !last_name || !username || !password ) {
+    const kbis = req.file;
+
+    if ( !first_name || !last_name || !username || !password
+        || !nomDeSociete || !adresse || !numeroSiren || !code || !kbis) {
         return res.status(422).json({message: 'All fields are required'})
     }
 
     const hashedPwd = await bcrypt.hash(password, 10)
 
-    const userObject = { first_name, last_name, username, "password": hashedPwd, roles: ["ADMIN"] }
+    const userObject = { first_name, last_name, username, "password": hashedPwd, roles: ["MARCHAND"] }
 
     const user = await User.create(userObject)
 
     if (user) {
-        res.status(201).json({ message: `New user ${username} created` })
-        // try {
-            const info = await transporter.sendMail({
-                from: 'tatibatchi15@gmail.com',
-                username,
-                subject,
-                text
-            });
-        console.log("Info "+info.toString())
-            // res.status(200).send(`Email envoyé: ${info.response}`);
-        // } catch (error) {
-        //     console.error(error);
-        //     res.status(500).send('Erreur lors de l’envoi de l’e-mail.');
-        // }
-    } else {
-        res.status(400).json({ message: 'Duplicate username' })
-    }
+        const user = await User.findOne({ where: { username: username } });
 
+        const marchandObject = { "userId": user.id, nomDeSociete, adresse, numeroSiren, code, "kbis": kbis.buffer}
+
+        const marchand = await Marchand.create(marchandObject)
+
+        if (marchand)
+            res.status(201).json({ message: `New user ${username} created` })
+    } else {
+        res.status(400).json({ message: 'Invalid user data received' })
+    }
 })
 
 
-const updateUser = asyncHandler(async (req, res) => {
+const updateMarchand = asyncHandler(async (req, res) => {
     const { id, first_name, last_name, username, password} = req.body
 
     if (!id || !first_name || !last_name || !username || password) {
@@ -89,7 +86,7 @@ const updateUser = asyncHandler(async (req, res) => {
 })
 
 
-const deleteUser = asyncHandler(async (req, res) => {
+const deleteMarchand = asyncHandler(async (req, res) => {
     const { id } = req.body
 
     if (!id) {
@@ -114,12 +111,9 @@ const deleteUser = asyncHandler(async (req, res) => {
     res.json(reply)
 })
 
-subject = "subject"
-text = "text"
-
 module.exports = {
-    getAllUsers,
-    createNewUser,
-    updateUser,
-    deleteUser
+    getAllMarchands,
+    createNewMarchand,
+    updateMarchand,
+    deleteMarchand
 }
