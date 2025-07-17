@@ -1,18 +1,31 @@
+require('dotenv').config()
 const Marchand = require('../models/Marchand')
 const User = require("../models/User");
 const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcrypt')
+const jwt = require("jsonwebtoken");
 
 
-const getAllMarchands = asyncHandler(async (req, res) => {
+const getInfoMarchand = asyncHandler(async (req, res) => {
 
-    const marchands = await Marchand.findAll()
+    const token = req.body.token;
+    let user = "";
 
-    if (!marchands?.length) {
-        return res.status(400).json({ message: 'No users found' })
+    try {
+        const payload = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+        user = await User.findOne({ where: { username: payload.UserInfo.username } });
+    } catch (e) {
+        console.error(e);
+        return res.sendStatus(401);
     }
 
-    res.json(marchands)
+    const marchands = await Marchand.findByPk(user.id)
+
+    if (!marchands) {
+        return res.status(400).json({ message: 'No InfoMarchand found' })
+    }
+
+    return res.json(marchands)
 })
 
 
@@ -41,8 +54,8 @@ const createNewMarchand = asyncHandler(async (req, res) => {
 
         const marchand = await Marchand.create(marchandObject)
 
-        if (marchand)
-            res.status(201).json({ message: `New user ${username} created` })
+    if (marchand)
+        res.status(201).json({ message: `New user ${username} created` })
     } else {
         res.status(400).json({ message: 'Invalid user data received' })
     }
@@ -112,7 +125,7 @@ const deleteMarchand = asyncHandler(async (req, res) => {
 })
 
 module.exports = {
-    getAllMarchands,
+    getInfoMarchand,
     createNewMarchand,
     updateMarchand,
     deleteMarchand

@@ -1,7 +1,6 @@
 const User = require('../models/User')
 const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcrypt')
-const {transporter} = require("../config/mailer");
 
 
 const getAllUsers = asyncHandler(async (req, res) => {
@@ -32,19 +31,6 @@ const createNewUser = asyncHandler(async (req, res) => {
 
     if (user) {
         res.status(201).json({ message: `New user ${username} created` })
-        // try {
-            const info = await transporter.sendMail({
-                from: 'tatibatchi15@gmail.com',
-                username,
-                subject,
-                text
-            });
-        console.log("Info "+info.toString())
-            // res.status(200).send(`Email envoyé: ${info.response}`);
-        // } catch (error) {
-        //     console.error(error);
-        //     res.status(500).send('Erreur lors de l’envoi de l’e-mail.');
-        // }
     } else {
         res.status(400).json({ message: 'Duplicate username' })
     }

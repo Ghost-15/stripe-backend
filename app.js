@@ -24,6 +24,7 @@ app.use('/auth', require('./routes/authRoute'));
 app.use('/refresh', require('./routes/refreshRoute'));
 app.use('/user', require('./routes/userRoute'))
 app.use('/marchand', require('./routes/marchandRoute'))
+app.use('/transaction', require('./routes/transactionRoute'))
 app.use('/logout', require('./routes/logoutRoute'));
 
 app.use(function(req, res, next) {

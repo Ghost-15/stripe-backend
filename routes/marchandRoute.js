@@ -7,9 +7,9 @@ const upload = require('../middleware/uploadFile');
 // router.use(verifyJWT)
 
 router.route('/')
-    .get(verifyJWT, marchandController.getAllMarchands)
+    .post(verifyJWT, marchandController.getInfoMarchand)
     .post(upload.single('kbis'), (marchandController.createNewMarchand))
-    .patch(verifyJWT, marchandController.updateMarchand)
+    .put(verifyJWT, marchandController.updateMarchand)
     .delete(verifyJWT, marchandController.deleteMarchand)
 
 // router.route('/:id')
