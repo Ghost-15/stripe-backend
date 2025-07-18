@@ -33,13 +33,13 @@ User.init(
             // },
         },
         roles: {
-        type: DataTypes.JSON,
-        allowNull: false,
-        required: true,
+            type: DataTypes.JSON,
+            allowNull: false,
+            required: true,
         },
         active:{
-        type: DataTypes.BOOLEAN,
-        defaultValue: false
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
         }
     },
     {

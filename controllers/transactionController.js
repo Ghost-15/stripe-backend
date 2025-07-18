@@ -1,8 +1,7 @@
 require('dotenv').config()
 const Transaction = require('../models/Transaction')
 const asyncHandler = require('express-async-handler')
-const bcrypt = require('bcrypt')
-const jwt = require("jsonwebtoken");
+const { v4: uuidv4 } = require('uuid');
 
 
 const getInfoTransaction = asyncHandler(async (req, res) => {
@@ -12,24 +11,22 @@ const getInfoTransaction = asyncHandler(async (req, res) => {
 
 const createNewTransaction = asyncHandler(async (req, res) => {
 
-    const { total } = req.body
+    const { description, total } = req.body
+    const randomCode = uuidv4();
 
-
-    if ( total ) {
+    if ( !description || !total ) {
         return res.status(422).json({message: 'All fields are required'})
     }
 
-    if (user) {
-        const user = await User.findOne({ where: { username: username } });
+    const transactionObject = { "description": description,
+        amount: total, code: randomCode }
 
-        const marchandObject = { "userId": user.id, nomDeSociete, adresse, numeroSiren, code, "kbis": kbis.buffer}
+    // const transaction = await Transaction.create(transactionObject)
 
-        const marchand = await Marchand.create(marchandObject)
-
-        if (marchand)
-            res.status(201).json({ message: `New user ${username} created` })
+    if (transactionObject){
+        return res.status(200).json({ message: '34513fe7-9128-418b-9622-f6c74c04fa1d' })
     } else {
-        res.status(400).json({ message: 'Invalid user data received' })
+        return res.status(400).json({ message: 'Not enregistrer' })
     }
 })
 

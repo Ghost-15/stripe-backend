@@ -3,28 +3,27 @@ const connection = require("../config/dbSequelize");
 
 class transaction extends Model {}
 
-transaction.init(
-    {
-
-        date: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            required: true
-        },
+transaction.init({
         description:{
             type: DataTypes.STRING,
             allowNull: false,
             required: true
         },
-        Amount:{
-            type: DataTypes.INTEGER,
+        amount:{
+            type: DataTypes.FLOAT,
             allowNull: false,
             required: true,
         },
-        Status:{
+        status:{
             type: DataTypes.STRING,
             allowNull: false,
-            required: true
+            defaultValue: 'waiting'
+        },
+        code:{
+            type: DataTypes.STRING,
+            allowNull: false,
+            required: true,
+            unique: true
         }
     },
     {
