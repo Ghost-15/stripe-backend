@@ -17,6 +17,21 @@ const getAllUsers = asyncHandler(async (req, res) => {
 const createNewUser = asyncHandler(async (req, res) => {
     const { first_name, last_name, username, password } = req.body
 
+    // Vérifier quels champs sont manquants
+    const missingFields = []
+    
+    if (first_name === undefined) missingFields.push('first_name')
+    if (last_name === undefined) missingFields.push('last_name')
+    if (username === undefined) missingFields.push('username')
+    if (password === undefined) missingFields.push('password')
+
+    if (missingFields.length > 0) {
+        return res.status(400).json({ 
+            message: `Missing required fields: ${missingFields.join(', ')}` 
+        })
+    }
+
+    // Vérifier si les champs sont vides
     if ( !first_name || !last_name || !username || !password ) {
         return res.status(422).json({message: 'All fields are required'})
     }

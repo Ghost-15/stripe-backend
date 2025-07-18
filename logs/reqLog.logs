@@ -374,3 +374,15 @@
 20250717	19:40:41	1017138b-a614-429d-8864-2e9572d4d284	POST	/user/activate	undefined
 20250717	19:41:09	c78c60df-fc20-490c-b974-7b6910a61705	OPTIONS	/auth	http://localhost:5173
 20250717	19:41:09	274fe669-b799-4c8f-9e40-494fb1195cfb	POST	/auth	http://localhost:5173
+20250718	13:23:22	f8bff65d-732d-4419-80fa-22dec80cbccf	OPTIONS	/user	http://localhost:5173
+20250718	13:23:22	8e62866b-510b-41a2-85e2-4634fa7dbf1f	POST	/user	http://localhost:5173
+20250718	13:24:56	c43812de-75ff-432a-98e4-56a40ef4b1ad	POST	/user	undefined
+20250718	13:31:21	c7e0f127-e519-4569-a592-03e2ec54b021	POST	/user	undefined
+20250718	13:32:55	e029e5b4-6f74-4f97-9b1f-8e0afd847b41	POST	/user	undefined
+20250718	13:33:03	00bbfab6-6817-4d82-a58e-90763561bbd4	POST	/user	undefined
+20250718	13:33:08	3ac15609-4aed-4ebf-abb6-198742b24b8c	POST	/user	undefined
+20250718	13:37:41	834222dd-5958-4b0b-8ac2-32bae3af15eb	OPTIONS	/user	http://localhost:5173
+20250718	13:37:41	40bf9f64-0399-4cc8-80eb-1fdcbb9fd29d	POST	/user	http://localhost:5173
+20250718	13:37:41	57347cf8-54f8-4ce6-9138-400f51140cfa	POST	/user	http://localhost:5173
+20250718	13:38:08	aeab85d1-8d0b-4986-8edc-54bb645b4aa0	OPTIONS	/user	http://localhost:5173
+20250718	13:38:08	3e228349-79aa-4be5-a23e-210bc653e179	POST	/user	http://localhost:5173
