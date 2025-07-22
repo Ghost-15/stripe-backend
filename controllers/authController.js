@@ -17,6 +17,13 @@ const login = asyncHandler(async (req, res) => {
         return res.status(401).json({ message: 'Unauthorized' })
     }
 
+    // 🔒 VÉRIFICATION DU COMPTE ACTIF - LIGNE AJOUTÉE !
+    if (!foundUser.active) {
+        return res.status(403).json({ 
+            message: 'Account not activated. Please check your email and activate your account first.' 
+        })
+    }
+
     const match = await bcrypt.compare(password, foundUser.password)
 
     if (!match) return res.status(401).json({ message: 'Unauthorized' })
@@ -49,6 +56,5 @@ const login = asyncHandler(async (req, res) => {
 
     res.json({ accessToken, roles })
 })
-
 
 module.exports = { login };
