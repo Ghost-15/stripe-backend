@@ -5,7 +5,6 @@ class Marchand extends Model {}
 
 Marchand.init(
     {
-
         userId: {
             type: DataTypes.INTEGER,
             allowNull: false,

@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const { logger, logEvents } = require('./middleware/logger')
 const errorHandler = require('./middleware/errorHandler')
 const cors = require("cors");
-const corsOptions = require('./config/corsOptions')
+const corsOptions = require('./middleware/corsOptions')
 const connectM = require('./config/dbMongoose')
 const mongoose = require('mongoose')
 
