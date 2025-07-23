@@ -17,7 +17,6 @@ const login = asyncHandler(async (req, res) => {
         return res.status(401).json({ message: 'Unauthorized' })
     }
 
-    // 🔒 VÉRIFICATION DU COMPTE ACTIF - LIGNE AJOUTÉE !
     if (!foundUser.active) {
         return res.status(403).json({ 
             message: 'Account not activated. Please check your email and activate your account first.' 
@@ -32,7 +31,6 @@ const login = asyncHandler(async (req, res) => {
         {
             "UserInfo": {
                 "username": foundUser.username,
-                // "roles": foundUser.roles
             }
         },
         process.env.ACCESS_TOKEN_SECRET,
@@ -47,14 +45,26 @@ const login = asyncHandler(async (req, res) => {
         { expiresIn: '7d' }
     )
 
+    console.log('🍪 Setting cookie with token:', refreshToken.substring(0, 20) + '...');
     res.cookie('jwt', refreshToken, {
         httpOnly: true,
-        secure: true,
-        sameSite: 'None',
+        secure: false,       
+        sameSite: 'Lax',    
         maxAge: 7 * 24 * 60 * 60 * 1000
-    })
+    });
+    console.log('🍪 Cookie set successfully');
 
-    res.json({ accessToken, roles })
+res.json({ 
+    accessToken, 
+    roles,
+    user: {
+        id: foundUser.id,
+        first_name: foundUser.first_name,
+        last_name: foundUser.last_name,
+        username: foundUser.username
+    }
+})
+
 })
 
 module.exports = { login };
