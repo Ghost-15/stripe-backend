@@ -69,7 +69,6 @@ const updateMarchand = asyncHandler(async (req, res) => {
         return res.status(400).json({ message: 'All fields except password are required' })
     }
 
-
     const user = await User.findById(id).exec()
 
     if (!user) {
