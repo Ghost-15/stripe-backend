@@ -1,5 +1,5 @@
 require('dotenv').config()
-const Transaction = require('../models/Transaction')
+const Transaction = require('../models/transaction')
 const asyncHandler = require('express-async-handler')
 const { v4: uuidv4 } = require('uuid');
 

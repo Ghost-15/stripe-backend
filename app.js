@@ -9,11 +9,15 @@ const cors = require("cors");
 const corsOptions = require('./middleware/corsOptions')
 const connectM = require('./config/dbMongoose')
 const mongoose = require('mongoose')
+const stripeWebhookController = require("./controllers/stripeWebhookController");
+
 
 const app = express();
 connectM()
 
+app.post("/webhook", express.raw({ type: "application/json" }), stripeWebhookController.webhook);
 app.use(logger);
+// app.use('/stripe', require('./routes/stripeWebhookRoute'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -26,6 +30,7 @@ app.use('/user', require('./routes/userRoute'))
 app.use('/marchand', require('./routes/marchandRoute'))
 app.use('/transaction', require('./routes/transactionRoute'))
 app.use('/logout', require('./routes/logoutRoute'));
+app.use('/stripe', require('./routes/stripeRoute'));
 
 app.use(function(req, res, next) {
   next(createError(404));
@@ -43,3 +48,5 @@ mongoose.connection.on('error', err => {
 })
 
 module.exports = app;
+
+
