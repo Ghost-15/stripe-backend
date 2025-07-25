@@ -4,7 +4,6 @@ const marchandController = require('../controllers/marchandController')
 const verifyJWT = require('../middleware/verifyJWT')
 const upload = require('../middleware/uploadFile');
 
-console.log("ici")
 router.route('/')
     .post(upload.single('kbis'), (marchandController.createNewMarchand))
     .put(verifyJWT, marchandController.updateMarchand)
