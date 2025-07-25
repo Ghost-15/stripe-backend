@@ -1,6 +1,7 @@
 require('dotenv').config()
-const Marchand = require('../models/Marchand')
-const User = require("../models/User");
+const {User, Marchand} = require('../models');
+// const Marchand = require('../models/marchand')
+// const User = require("../models/user");
 const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcrypt')
 const jwt = require("jsonwebtoken");

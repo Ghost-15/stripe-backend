@@ -1,51 +1,50 @@
 const { Model, DataTypes } = require("sequelize");
 const connection = require("../config/dbSequelize");
 
-class Marchand extends Model {}
+class User extends Model {}
 
-Marchand.init(
+User.init(
     {
-        userId: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: 'Users',
-                key: 'id'
-            }
-        },
-        nomDeSociete:{
+        first_name: {
             type: DataTypes.STRING,
             allowNull: false,
             required: true
         },
-        adresse:{
+        last_name: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            required: true
+        },
+        username: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            unique: true,
+            required: true,
+            validate: {
+                isEmail: true,
+            },
+        },
+        password: {
             type: DataTypes.STRING,
             allowNull: false,
             required: true,
+            // validate: {
+            //     is: /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,32}/,
+            // },
         },
-        numeroSiren:{
-            type: DataTypes.INTEGER,
+        roles: {
+            type: DataTypes.JSON,
             allowNull: false,
-            required: true
-        },
-        code:{
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            required: true
-        },
-        kbis:{
-            type: DataTypes.BLOB,
-            allowNull: false,
-            required: true
+            required: true,
         },
         active:{
             type: DataTypes.BOOLEAN,
             defaultValue: false
         }
     },
-          {
+    {
         sequelize: connection,
     }
 );
 
-module.exports = Marchand;
+module.exports = User;
