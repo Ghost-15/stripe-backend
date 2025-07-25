@@ -9,15 +9,34 @@ const cors = require("cors");
 const corsOptions = require('./middleware/corsOptions')
 const connectM = require('./config/dbMongoose')
 const mongoose = require('mongoose')
-const stripeWebhookController = require("./controllers/stripeWebhookController");
-
+const http = require("http");
+const socketIo = require("socket.io");
 
 const app = express();
 connectM()
 
-app.post("/webhook", express.raw({ type: "application/json" }), stripeWebhookController.webhook);
+const server = http.createServer(app);
+const io = socketIo(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET","POST"]
+  }
+});
+const webSocketController = require("./controllers/webSocketController")(io);
+io.on("connection", (socket) => {
+  console.log("Client connecté :", socket.id);
+
+  socket.on("join_user", (userId) => {
+    console.log(`Utilisateur ${userId} a rejoint sa room`);
+    socket.join(userId);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("Client déconnecté :", socket.id);
+  });
+});
+
 app.use(logger);
-// app.use('/stripe', require('./routes/stripeWebhookRoute'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -29,14 +48,19 @@ app.use('/refresh', require('./routes/refreshRoute'));
 app.use('/user', require('./routes/userRoute'))
 app.use('/marchand', require('./routes/marchandRoute'))
 app.use('/transaction', require('./routes/transactionRoute'))
+app.use('/webSocket', require('./routes/webSocketRoute')(webSocketController))
 app.use('/logout', require('./routes/logoutRoute'));
-app.use('/stripe', require('./routes/stripeRoute'));
 
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
 app.use(errorHandler)
+
+io.on("connection", (socket) => {
+  console.log("Client connecté :", socket.id);
+  socket.on("disconnect", () => console.log("Déconnecté :", socket.id));
+});
 
 mongoose.connection.once('open', () => {
   console.log('Connected to MongoDB')
@@ -48,5 +72,3 @@ mongoose.connection.on('error', err => {
 })
 
 module.exports = app;
-
-
