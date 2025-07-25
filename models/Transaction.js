@@ -4,6 +4,16 @@ const connection = require("../config/dbSequelize");
 class transaction extends Model {}
 
 transaction.init({
+
+            userId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: 'Users',
+                key: 'id'
+            }
+        },
+        
         description:{
             type: DataTypes.STRING,
             allowNull: false,

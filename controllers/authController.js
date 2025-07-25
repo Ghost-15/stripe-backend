@@ -38,6 +38,8 @@ const login = asyncHandler(async (req, res) => {
     )
 
     const roles = ( foundUser.roles )
+    
+    const user = (foundUser.id)
 
     const refreshToken = jwt.sign(
         { "username": foundUser.username },
@@ -59,9 +61,6 @@ res.json({
     roles,
     user: {
         id: foundUser.id,
-        first_name: foundUser.first_name,
-        last_name: foundUser.last_name,
-        username: foundUser.username
     }
 })
 
