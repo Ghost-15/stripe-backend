@@ -12,5 +12,15 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      - name: Install dependencies
+        run: npm install
+
+      - name: Check for outdated packages
+        run: npm outdated || true
+
+      - name: Update minor/patch dependencies
+        run: npm update
+
       - run: npm ci
+
       - run: npm run build
