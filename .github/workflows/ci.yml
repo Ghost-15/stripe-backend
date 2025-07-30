@@ -22,5 +22,3 @@ jobs:
         run: npm update
 
       - run: npm ci
-
-      - run: npm run build
